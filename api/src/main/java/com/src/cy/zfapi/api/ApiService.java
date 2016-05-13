@@ -1,4 +1,4 @@
-package com.src.cy.zfapi;
+package com.src.cy.zfapi.api;
 
 import java.util.Map;
 
@@ -12,7 +12,7 @@ import rx.Observable;
 /**
  * Created by CY on 2016/3/16.
  */
-interface ApiService {
+public interface ApiService {
 
 
     @FormUrlEncoded

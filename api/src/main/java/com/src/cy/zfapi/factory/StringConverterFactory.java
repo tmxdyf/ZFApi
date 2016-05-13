@@ -1,4 +1,4 @@
-package com.src.cy.zfapi;
+package com.src.cy.zfapi.factory;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -12,7 +12,7 @@ import retrofit2.Retrofit;
 /**
  * Created by CY on 2016/3/16.
  */
-class StringConverterFactory extends Converter.Factory {
+public class StringConverterFactory extends Converter.Factory {
 
     public static StringConverterFactory create() {
         return new StringConverterFactory();

@@ -1,7 +1,9 @@
-package com.src.cy.zfapi;
+package com.src.cy.zfapi.util;
 
 import android.text.TextUtils;
 import android.util.Base64;
+
+import com.src.cy.zfapi.ZFApi;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;

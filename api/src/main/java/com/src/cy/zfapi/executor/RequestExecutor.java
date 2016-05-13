@@ -1,8 +1,12 @@
-package com.src.cy.zfapi;
+package com.src.cy.zfapi.executor;
 
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.src.cy.zfapi.ZFApi;
+import com.src.cy.zfapi.api.ApiService;
+import com.src.cy.zfapi.factory.StringConverterFactory;
+import com.src.cy.zfapi.util.DESUtil;
 
 import java.util.Map;
 
@@ -18,7 +22,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by CY on 2016/3/30.
  */
-class RequestExecutor {
+public class RequestExecutor {
 
 
     private static ApiService mApiService;
