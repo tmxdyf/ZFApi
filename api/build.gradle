@@ -46,7 +46,7 @@ dependencies {
 
 // ext is a gradle closure allowing the declaration of global properties
 ext {
-    PUBLISH_GROUP_ID = 'com.cy.zfapi'
+    PUBLISH_GROUP_ID = 'com.cy'
     PUBLISH_ARTIFACT_ID = 'zfapi'
     PUBLISH_VERSION = android.defaultConfig.versionName
 }
