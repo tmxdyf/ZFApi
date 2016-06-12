@@ -25,8 +25,8 @@ public class DESUtil {
     /**
      * 解密
      *
-     * @param message
-     * @return
+     * @param message 需要解密的字符串
+     * @return 返回解密后字符串
      */
     public static String decryptDoNet(String message) {
         byte[] bytesrc = Base64.decode(message.getBytes(), Base64.DEFAULT);
@@ -50,8 +50,8 @@ public class DESUtil {
     /**
      * 加密
      *
-     * @param message
-     * @return
+     * @param message 需要加密的字符串
+     * @return 加密后的字符串
      */
     public static String encryptAsDoNet(String message) {
         try {

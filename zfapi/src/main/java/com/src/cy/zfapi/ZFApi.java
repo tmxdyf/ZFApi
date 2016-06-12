@@ -38,11 +38,11 @@ public class ZFApi {
      * 方式一 返回观察者对象，需外部订阅并添加至订阅容器中
      * 请求网络入口,结果在主线程返回
      *
-     * @param method
-     * @param map
-     * @param cla
+     * @param method 请求Web的方法体
+     * @param map 需要上传的参数与内容
+     * @param cla 返回的结果内容反射的类
      * @param <T>    数据实体类
-     * @return
+     * @return 返回观察者对象
      */
     public static <T> Observable<T> request(String method, Map<String, Object> map, Class<T> cla) {
         return RequestExecutor.request(method, map, cla);
@@ -51,12 +51,12 @@ public class ZFApi {
     /**
      * 方式二 数据在Subscriber返回，不返回观察者对象
      *
-     * @param method
-     * @param map
-     * @param cla
-     * @param subscriber
-     * @param compositeSubscription
-     * @param <T>
+     * @param method 请求Web的方法体
+     * @param map 需要上传的参数与内容
+     * @param cla 返回的结果内容反射的类
+     * @param subscriber 订阅实体类
+     * @param compositeSubscription 订阅成功后将返回的Subscription装入compositeSubscription中
+     * @param <T> 数据实体类
      */
     public static <T> void request(String method, Map<String, Object> map, Class<T> cla, Subscriber<T> subscriber, CompositeSubscription compositeSubscription) {
         Observable<T> observable = ZFApi.request(method, map, cla);

@@ -56,11 +56,11 @@ public class RequestExecutor {
     /**
      * 请求网络入口
      *
-     * @param method
-     * @param map
-     * @param cla
-     * @param <T>
-     * @return
+     * @param method 请求Web的方法体
+     * @param map 需要上传的参数与内容
+     * @param cla 返回的结果内容反射的类
+     * @param <T> 数据实体类
+     * @return 返回观察者对象
      */
     public static <T> Observable<T> request(String method, Map<String, Object> map, Class<T> cla) {
         Observable<String> observable = getApiService().post2(method, ZFApi.isEncrypt() ? encryptMap(map) : map).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
@@ -70,7 +70,7 @@ public class RequestExecutor {
     /**
      * 加密Map
      *
-     * @return
+     * @return 返回加密后的json-value键值对
      */
     private static Map<String, Object> encryptMap(Map<String, Object> map) {
         String json = new Gson().toJson(map);
