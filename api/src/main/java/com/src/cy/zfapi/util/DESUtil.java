@@ -2,6 +2,7 @@ package com.src.cy.zfapi.util;
 
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 
 import com.src.cy.zfapi.ZFApi;
 
@@ -40,6 +41,7 @@ public class DESUtil {
             return new String(retByte);
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e("DES", "解密异常：" + message);
             return message;
         }
 

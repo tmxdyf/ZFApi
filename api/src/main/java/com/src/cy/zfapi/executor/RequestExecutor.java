@@ -62,7 +62,7 @@ public class RequestExecutor {
      * @param <T>
      * @return
      */
-    public static <T> Observable<T> request(String method, Map<String, String> map, Class<T> cla) {
+    public static <T> Observable<T> request(String method, Map<String, Object> map, Class<T> cla) {
         Observable<String> observable = getApiService().post2(method, ZFApi.isEncrypt() ? encryptMap(map) : map).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         return observable.map(s -> new Gson().fromJson(s, cla));
     }
@@ -72,7 +72,7 @@ public class RequestExecutor {
      *
      * @return
      */
-    private static Map<String, String> encryptMap(Map<String, String> map) {
+    private static Map<String, Object> encryptMap(Map<String, Object> map) {
         String json = new Gson().toJson(map);
         String encryptContent = DESUtil.encryptAsDoNet(json);
         map.clear();

@@ -17,12 +17,12 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("{method}")
-    Call<String> post(@Path("method") String method, @FieldMap Map<String, String> fieldMap);
+    Call<String> post(@Path("method") String method, @FieldMap Map<String, Object> fieldMap);
 
 
     @FormUrlEncoded
     @POST("{method}")
-    Observable<String> post2(@Path("method") String method, @FieldMap Map<String, String> fieldMap);
+    Observable<String> post2(@Path("method") String method, @FieldMap Map<String, Object> fieldMap);
 
 
 }

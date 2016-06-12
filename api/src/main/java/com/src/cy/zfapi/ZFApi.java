@@ -1,10 +1,16 @@
 package com.src.cy.zfapi;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.src.cy.zfapi.executor.RequestExecutor;
 
+import java.lang.reflect.Type;
 import java.util.Map;
 
 import rx.Observable;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by CY on 2016/3/30.
@@ -29,6 +35,7 @@ public class ZFApi {
     }
 
     /**
+     * 方式一 返回观察者对象，需外部订阅并添加至订阅容器中
      * 请求网络入口,结果在主线程返回
      *
      * @param method
@@ -37,8 +44,31 @@ public class ZFApi {
      * @param <T>    数据实体类
      * @return
      */
-    public static <T> Observable<T> request(String method, Map<String, String> map, Class<T> cla) {
+    public static <T> Observable<T> request(String method, Map<String, Object> map, Class<T> cla) {
         return RequestExecutor.request(method, map, cla);
+    }
+
+    /**
+     * 方式二 数据在Subscriber返回，不返回观察者对象
+     *
+     * @param method
+     * @param map
+     * @param cla
+     * @param subscriber
+     * @param compositeSubscription
+     * @param <T>
+     */
+    public static <T> void request(String method, Map<String, Object> map, Class<T> cla, Subscriber<T> subscriber, CompositeSubscription compositeSubscription) {
+        Observable<T> observable = ZFApi.request(method, map, cla);
+        Subscription subscription = observable.subscribe(subscriber);
+        compositeSubscription.add(subscription);
+    }
+
+    public static Map<String, Object> objToMap(Object entity) {
+        Type type = new TypeToken<Map<String, Object>>() {
+        }.getType();
+        Gson gson = new Gson();
+        return gson.fromJson(gson.toJson(entity), type);
     }
 
 
