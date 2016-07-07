@@ -46,10 +46,10 @@ ext {
     publishedGroupId = 'com.cy.src'//JCenter的GroupId
     artifact = 'zfapi'//JCenter的ArtifactId
 
-    siteUrl = 'http://git.oschina.net/tmxdyf/ZFApi'
-    gitUrl = 'https://git.oschina.net/tmxdyf/ZFApi.git'
+    siteUrl = 'https://github.com/tmxdyf/ZFApi'
+    gitUrl = 'https://github.com/tmxdyf/ZFApi.git'
 
-    libraryVersion = '1.0.0'//版本号
+    libraryVersion = '1.0.1'//版本号
     libraryName = 'zfapi'//项目名字，没什么用
     libraryDescription = 'network library for Android'//项目描述，没什么用
 
@@ -64,5 +64,5 @@ ext {
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
     allLicenses = ["Apache-2.0"]
 }
-apply from:'https://cdn.rawgit.com/Jude95/JCenter/master/install.gradle'
+//apply from:'https://cdn.rawgit.com/Jude95/JCenter/master/install.gradle'
 apply from:'https://cdn.rawgit.com/Jude95/JCenter/master/bintray.gradle'

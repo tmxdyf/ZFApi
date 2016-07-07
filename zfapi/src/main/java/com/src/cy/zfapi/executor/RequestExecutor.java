@@ -9,6 +9,7 @@ import com.src.cy.zfapi.factory.StringConverterFactory;
 import com.src.cy.zfapi.util.DESUtil;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.Interceptor;
@@ -40,7 +41,9 @@ public class RequestExecutor {
                 String result = responseBody.string();
 
                 result = ZFApi.isEncrypt() ? DESUtil.decryptDoNet(result) : result;//解密
-                Log.e("Client", "intercept#result:" + result);
+                if (ZFApi.isDebug()) {
+                    Log.e("Client", "intercept#result:" + result);
+                }
                 ResponseBody newResponseBody = ResponseBody.create(responseBody.contentType(), result);
                 Response newResponse = response.newBuilder().body(newResponseBody).build();
                 return newResponse;
@@ -63,13 +66,13 @@ public class RequestExecutor {
      * 请求网络入口
      *
      * @param method 请求Web的方法体
-     * @param map    需要上传的参数与内容
+     * @param object 需要上传的参数与内容,将被转换为json字符串形式
      * @param cla    返回的结果内容反射的类
      * @param <T>    数据实体类
      * @return 返回观察者对象
      */
-    public static <T> Observable<T> request(String method, Map<String, Object> map, final Class<T> cla) {
-        Observable<String> observable = getApiService().post2(method, ZFApi.isEncrypt() ? encryptMap(map) : map).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+    public static <T> Observable<T> request(String method, Object object, final Class<T> cla) {
+        Observable<String> observable = getApiService().post2(method, transitionObj(object)).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         return observable.map(new Func1<String, T>() {
             @Override
             public T call(String s) {
@@ -78,18 +81,48 @@ public class RequestExecutor {
         });
     }
 
+//    /**
+//     * 加密Map
+//     *
+//     * @return 返回加密后的json-value键值对
+//     */
+//    private static Map<String, Object> encryptMap(Map<String, Object> map) {
+//        String json = new Gson().toJson(map);
+//        String encryptContent = DESUtil.encryptAsDoNet(json);
+//        if (ZFApi.isDebug()) {
+//            Log.e("RequestExecutor", "encryptMap start:" + json);
+//            Log.e("RequestExecutor", "encryptMap end:" + encryptContent);
+//        }
+//        map.clear();
+//        map.put("json", encryptContent);
+//        return map;
+//    }
+
     /**
-     * 加密Map
+     * 转换数据
      *
+     * @param object 传入的对象，将被转换为json字符串形式
      * @return 返回加密后的json-value键值对
      */
-    private static Map<String, Object> encryptMap(Map<String, Object> map) {
-        String json = new Gson().toJson(map);
-        String encryptContent = DESUtil.encryptAsDoNet(json);
-        map.clear();
-        Log.e("RequestHelper", "encryptMap start:" + json);
-        map.put("json", encryptContent);
-        Log.e("RequestHelper", "encryptMap end:" + encryptContent);
+    private static Map<String, Object> transitionObj(Object object) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        String json = new Gson().toJson(object);
+        if (ZFApi.isDebug()) {
+            Log.e("RequestExecutor", "请求json字符串:" + json);
+        }
+        String key = "json";
+        if (ZFApi.isEncrypt()) {
+            map.put(key, DESUtil.encryptAsDoNet(json));
+            if (ZFApi.isDebug()) {
+                Log.e("RequestExecutor", "加密后内容:" + map.get(key));
+            }
+        } else {
+            map.put(key, json);
+        }
+
+
         return map;
     }
 }
